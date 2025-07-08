@@ -1,0 +1,30 @@
+.hedaer-column {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header-icons-left {
+  justify-content: start;
+  margin-left: 20px;
+}
+
+.header-icons-right {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.header-icons img {
+  height: 35px;
+  width: 35px;
+}
+
+.header-icons-right img {
+  margin-right: 15px;
+}
+
+.header-title {
+  margin-left: 100px;
+}
