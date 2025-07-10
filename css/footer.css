@@ -19,6 +19,12 @@ footer {
   font-weight: bold;
 }
 
+.keyboard-column:hover {
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: rgb(165, 165, 165);
+}
+
 .keyboard-big-column {
   display: flex;
   flex-direction: column;
@@ -33,6 +39,12 @@ footer {
   padding: 10px 13px 10px 13px;
   font-size: 13px;
   font-weight: bold;
+}
+
+.keyboard-big-column:hover {
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: rgb(165, 165, 165);
 }
 
 .keyboard-big-column img {
