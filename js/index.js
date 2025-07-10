@@ -31,16 +31,41 @@ function appStrat() {
       const block = document.querySelector(
         `.board-block[data-index='${attempts}${i}']`
       );
-
       const 입력한_글자 = block.innerText;
       const 정답_글자 = 정답[i];
+      const 키보드 = document.querySelector(
+        `.keyboard-column[data-key='${입력한_글자}`
+      );
       if (입력한_글자 === 정답_글자) {
         맞은개수 += 1;
         block.style.background = '#6AAA64';
+        block.style.color = 'white';
+        block.classList.add('block-correct');
+        if (키보드) {
+          키보드.style.background = '#6AAA64';
+          키보드.style.color = 'white';
+        }
       } else if (정답.includes(입력한_글자)) {
         block.style.background = '#C9B458';
-      } else block.style.background = '#787C7E';
-      block.style.color = 'white';
+        block.style.color = 'white';
+        block.classList.add('block-wrong');
+        if (키보드 && 키보드.style.background !== '#6AAA64') {
+          키보드.style.background = '#C9B458';
+          키보드.style.color = 'white';
+        }
+      } else {
+        block.style.background = '#787C7E';
+        block.style.color = 'white';
+        block.classList.add('block-wrong');
+        if (
+          키보드 &&
+          키보드.style.background !== '#6AAA64' &&
+          키보드.style.background !== '#C9B458'
+        ) {
+          키보드.style.background = '#787C7E';
+          키보드.style.color = 'white';
+        }
+      }
       //중복으로 사용하는걸 최대한 지향해야됨. 알고리즘으로..
     }
 
@@ -48,9 +73,15 @@ function appStrat() {
     else nextLine();
   };
 
-  const handleKeydown = (event) => {
-    const key = event.key.toUpperCase();
-    const keyCode = event.keyCode;
+  const handleKeydown = (eventOrKey) => {
+    let key;
+
+    if (typeof eventOrKey === 'string') {
+      key = eventOrKey.toUpperCase();
+    } else {
+      key = eventOrKey.key.toUpperCase();
+    }
+
     const thisBlock = document.querySelector(
       `.board-block[data-index='${attempts}${index}']`
     );
@@ -65,14 +96,13 @@ function appStrat() {
       if (index !== 0) index -= 1;
     };
 
-    if (event.key === 'Backspace') handleBackspace();
+    if (key === 'BACKSPACE') handleBackspace();
     else if (index === 5) {
-      if (event.key === 'Enter') handleEnterkey();
+      if (key === 'ENTER') handleEnterkey();
       else return;
-    } else if (keyCode >= 65 && keyCode <= 90) {
+    } else if (/^[A-Z]$/.test(key)) {
       thisBlock.innerText = key;
       index += 1;
-      // 위랑 완전히 같지 않지만 같은표현이라고 볼수있음 : index = index + 1;  //  index++;
     }
   };
 
@@ -93,6 +123,18 @@ function appStrat() {
 
   startTime();
   window.addEventListener('keydown', handleKeydown);
+
+  const keys = document.querySelectorAll(
+    '.keyboard-column, .keyboard-big-column'
+  );
+
+  for (let i = 0; i < keys.length; i++) {
+    const el = keys[i];
+    el.addEventListener('click', () => {
+      const key = el.dataset.key;
+      handleKeydown(key);
+    });
+  }
 }
 
 appStrat();
